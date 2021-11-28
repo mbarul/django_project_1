@@ -1,9 +1,55 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% block title %}
 <title>Todo List Manager - Task</title>
 {% endblock title %}
 {% block content %}
 <div class="container">
-  <h1>{{welcome_text}}</h1>
+  </br>
+  {% for message in messages %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  {% endfor %}
+  <form method="POST" class = "row">
+    {% csrf_token %}
+    <h1><label name="task" class="form-label col-lg-4 ">Add Task</label></h1>
+    <input type="text" class="form-control m-1" name="task" placeholder="New Task">
+    <button type="submit" class="btn btn-dark col-lg-2 m-1">Submit</button>
+  </form>
+  </br>
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Task</th>
+        <th scope="col">Done</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if all_tasks %}
+      {% for object in all_tasks %}
+      {% if object.done == True%}
+      <tr class="table-success">
+        <td>{{object.task}}</td>
+        <td>Completed</td>
+        <td>Edit</td>
+        <td>Delete</td>
+      </tr>
+
+      {% else %}
+      <tr>
+        <td>{{object.task}}</td>
+        <td>Not completed</td>
+        <td>Edit</td>
+        <td>Delete</td>
+      </tr>
+      {%endif%}
+      {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
 </div>
 {% endblock content %}
