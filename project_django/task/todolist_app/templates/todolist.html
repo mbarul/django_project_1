@@ -12,9 +12,9 @@
   </div>
 
   {% endfor %}
-  <form method="POST" class = "row">
+  <form method="POST" class="row">
     {% csrf_token %}
-    <h1><label name="task" class="form-label col-lg-4 ">Add Task</label></h1>
+    <h3><label name="task" class="form-label col-lg-4 "><strong>Add Task</strong></label></h3>
     <input type="text" class="form-control m-1" name="task" placeholder="New Task">
     <button type="submit" class="btn btn-dark col-lg-2 m-1">Submit</button>
   </form>
@@ -33,18 +33,18 @@
       {% for object in all_tasks %}
       {% if object.done == True%}
       <tr class="table-success">
-        <td>{{object.task}}</td>
+        <td>{{object.id}} - {{object.task}}</td>
         <td>Completed</td>
-        <td>Edit</td>
-        <td>Delete</td>
+        <td><a href="{% url 'update_task' object.id%}"><img  src="/static/images/updating.png" alt="update" width='20' height='20'></a></td>
+        <td><a href="{% url 'delete_task' object.id %}"><img src="/static/images/close.png" alt="delete" width='20' height='20'></a></td>
       </tr>
 
       {% else %}
       <tr>
-        <td>{{object.task}}</td>
-        <td>Not completed</td>
-        <td>Edit</td>
-        <td>Delete</td>
+        <td class="col-lg-8">{{object.id}} - {{object.task}}</td>
+        <td class="col-lg-2">Not completed</td>
+        <td class="col-lg-1"><a href="{% url 'update_task' object.id%}"><img  src="/static/images/updating.png" alt="update" width='20' height='20'></a></td>
+        <td class="col-lg-1"><a href="{% url 'delete_task' object.id %}"><img  src="/static/images/close.png" alt="delete" width='20' height='20'></a></td>
       </tr>
       {%endif%}
       {% endfor %}
