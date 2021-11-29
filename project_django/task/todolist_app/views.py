@@ -1,7 +1,9 @@
+from django.core import paginator
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.http import HttpResponse, request
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from todolist_app.models import TaskList
 from todolist_app.forms import TaskForm
@@ -16,6 +18,9 @@ def todolist(request):
         return redirect('todolist')
     else:   
         all_tasks = TaskList.objects.all
+        paginator = Paginator(all_tasks, 5)
+        page = request.GET.get('page')
+        all_tasks = paginator.get_page(page)
         return render(request, 'todolist.html', {'all_tasks': all_tasks})
 
 def delete_task(request, task_id):
@@ -29,11 +34,24 @@ def update_task(request, task_id):
         form = TaskForm(request.POST or None, instance=task)
         if form.is_valid():
             form.save()
+
         messages.success(request,("Task Updated!"))
         return redirect('todolist')
     else:   
         task_object = TaskList.objects.get(pk=task_id)
         return render(request, 'update.html', {'task_object': task_object})
+
+def complete_task(request, task_id):
+    task = TaskList.objects.get(pk=task_id)
+    task.done = True
+    task.save()
+    return redirect('todolist')
+
+def uncompleted_task(request, task_id):
+    task = TaskList.objects.get(pk=task_id)
+    task.done = False
+    task.save()
+    return redirect('todolist')
 
 def contact(request):
     context = {
