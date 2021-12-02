@@ -5,6 +5,7 @@
 {% block content %}
 <div class="container">
   </br>
+  {% if messages %}
   {% for message in messages %}
   <div class="alert alert-info alert-dismissible fade show" role="alert">
     {{ message }}
@@ -12,6 +13,7 @@
   </div>
 
   {% endfor %}
+  {% endif %}
   <form method="POST" class="row">
     {% csrf_token %}
     <h3><label name="task" class="form-label col-lg-4 "><strong>Add Task</strong></label></h3>
@@ -67,7 +69,7 @@
       {% if all_tasks.has_next %}
         <li class="page-item"><a class="page-link text-dark" href="?page={{all_tasks.next_page_number}}">{{all_tasks.next_page_number}}</a></li>
       {% endif %}
-      <li class="page-item"><a class="page-link text-dark" href="?page={{all_tasks.pagination.num_pages}}">>></a></li>
+      <li class="page-item"><a class="page-link text-dark" href="?page={{all_tasks.paginator.num_pages}}">>></a></li>
     </ul>
   </nav>
 </div>

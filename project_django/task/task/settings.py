@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'todolist_app',
     'debug_toolbar',
     'users_app',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
