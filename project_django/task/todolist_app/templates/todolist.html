@@ -35,7 +35,7 @@
       {% for object in all_tasks %}
       {% if object.done == True%}
       <tr class="table-success">
-        <td class="col-lg-9">{{object.id}} - {{object.task}}</td>
+        <td class="col-lg-9"><del>{{object.id}} - {{object.task}}</del></td>
         <td class="col-lg-1 "><a href="{% url 'uncompleted_task' object.id%}"><img src="/static/images/checked.png"
               alt="update" width='20' height='20'></a></td>
         <td class="col-lg-1"><a href="{% url 'update_task' object.id%}"><img src="/static/images/updating.png"
